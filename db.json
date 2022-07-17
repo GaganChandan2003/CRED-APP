@@ -1,0 +1,76 @@
+{
+  "tasks":[
+      {
+          "id":1,
+          "title":"Server",
+          "description":"Description Task1",
+          "task_status":"todo",
+          "tags":["Personal","Official"],
+          "subTasks":[
+              {
+                  "subTaskTitle":"Task1:Sub Task 1",
+                  "status":true
+              },
+              {
+                  "subTaskTitle":"Task1:Sub Task 2",
+                  "status":false
+              }
+          ]
+
+      },
+      {
+          "id":2,
+          "title":"Server",
+          "description":"Description Task2",
+          "task_status":"in-progress",
+          "tags":["Personal","Official"],
+          "subTasks":[
+              {
+                  "subTaskTitle":"Task2:Sub Task 1",
+                  "status":true
+              },
+              {
+                  "subTaskTitle":"Task2:Sub Task 2",
+                  "status":false
+              }
+          ]
+
+      },
+      {
+          "id":3,
+          "title":"Server",
+          "description":"Description Task3",
+          "task_status":"done",
+          "tags":["Others","Official"],
+          "subTasks":[
+              {
+                  "subTaskTitle":"Task3:Sub Task 1",
+                  "status":false
+              },
+              {
+                  "subTaskTitle":"Task3:Sub Task 2",
+                  "status":false
+              }
+          ]
+
+      },
+      {
+          "id":4,
+          "title":"Server",
+          "description":"Description Task4",
+          "task_status":"todo",
+          "tags":["Personal"],
+          "subTasks":[
+              {
+                  "subTaskTitle":"Task4:Sub Task 1",
+                  "status":true
+              },
+              {
+                  "subTaskTitle":"Task4:Sub Task 2",
+                  "status":false
+              }
+          ]
+
+      }
+  ]
+}
