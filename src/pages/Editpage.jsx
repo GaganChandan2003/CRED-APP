@@ -27,7 +27,7 @@ const Editpage = () => {
         if(tasks.length===0){
             dispatch(getTasks());
         }
-    },[dispatch.tasks.length])
+    },[dispatch,tasks.length])
     
     useEffect(()=>
     {
