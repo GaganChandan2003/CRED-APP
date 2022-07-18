@@ -9,3 +9,7 @@ export const UPDATE_TASK_F="u/f";
 export const ADD_SUBTASK_R="s/r";
 export const ADD_SUBTASK_S="s/s";
 export const ADD_SUBTASK_F="s/f";
+
+export const DELETE_SUBTASK_R="d/r";
+export const DELETE_SUBTASK_S="d/s";
+export const DELETE_SUBTASK_F="d/f";

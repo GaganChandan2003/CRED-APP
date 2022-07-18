@@ -4,7 +4,7 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import {addSubtasks, getTasks,updateTask} from '../redux/AppReducer/action';
+import {addSubtasks, deleteSubTasks, getTasks,updateTask} from '../redux/AppReducer/action';
 import { useDispatch } from 'react-redux';
 const Editpage = () => {
     const {id}=useParams();
@@ -67,6 +67,13 @@ const Editpage = () => {
             return {...item,status:false}
         })
         dispatch(addSubtasks(id,{subTasks:newData})).then(()=>dispatch(getTasks()));
+    }
+
+    const handleDelete=(title)=>
+    {
+      let newTitle=subTasks.filter((item)=>item.subTaskTitle!==title
+      )
+      dispatch(deleteSubTasks(id,{subTasks:newTitle})).then(()=>dispatch(getTasks()));
     }
     useEffect(()=>
     {
@@ -147,7 +154,7 @@ const Editpage = () => {
                     subTasks.length&&subTasks.map((item,ind)=>(
                         <Flex key={ind} justifyContent={"space-between"} >
                             <Checkbox  value={item.subTaskTitle} key={ind} size="md">{item.subTaskTitle}</Checkbox>
-                            <DeleteIcon/>
+                            <DeleteIcon onClick={()=>handleDelete(item.subTaskTitle)}/>
                         </Flex>
                     ))
                     }

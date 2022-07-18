@@ -24,5 +24,14 @@ const addSubtasks=(id,payload)=>(dispatch)=>
     return axios.patch(`http://localhost:8080/tasks/${id}`,payload) 
     .then((res)=>{dispatch({type:types.ADD_SUBTASK_S,payload:payload})})
     .catch((res)=>{dispatch({type:types.ADD_SUBTASK_F})})
+};
+
+
+const deleteSubTasks=(id,payload)=>(dispatch)=>
+{
+  dispatch({type:types.DELETE_SUBTASK_R});
+  return axios.patch(`http://localhost:8080/tasks/${id}`,payload)
+  .then((res)=>{dispatch({type:types.DELETE_SUBTASK_S,payload:res})})
+  .catch((res)=>{dispatch({type:types.DELETE_SUBTASK_F})})
 }
-export {getTasks,updateTask,addSubtasks};
+export {getTasks,updateTask,addSubtasks,deleteSubTasks};
