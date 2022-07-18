@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import getTasks from '../redux/AppReducer/action';
+import {getTasks }from '../redux/AppReducer/action';
 import TaskCard from './TaskCard';
 
 

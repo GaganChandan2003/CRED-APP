@@ -4,9 +4,8 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import getTasks from '../redux/AppReducer/action';
+import {addSubtasks, getTasks,updateTask} from '../redux/AppReducer/action';
 import { useDispatch } from 'react-redux';
-
 const Editpage = () => {
     const {id}=useParams();
     const dispatch=useDispatch();
@@ -20,8 +19,55 @@ const Editpage = () => {
     const [checkbox, setcheckbox] = useState([]);
     
     
-    const addSubTask=()=>
-    {};
+    const addSubTask=(e)=>
+    {
+        e.preventDefault();
+        if(currentSubTask)
+        {
+          
+            const newSubTasks=[...subTasks,{subTaskTitle:currentSubTask,status:false}] 
+          dispatch(addSubTask(id,{subTasks:newSubTasks})).then(()=>dispatch(getTasks()))
+          .then(()=>setCurrentSubTask(""));
+        }
+
+    };
+    const updateHandler=(type,value)=>
+    {
+        if(type==="textAndDescription")
+        {
+            dispatch(updateTask(id,{
+                title:taskTitle,
+                description:taskDescription,
+            })).then(()=>dispatch(getTasks()));
+        }
+        else if(type==="taskStatus")
+        {
+            dispatch(updateTask(id,{
+                task_status:value
+            })).then(()=>dispatch(getTasks()));
+        }
+        else if(type==="tags")
+        {
+            dispatch(updateTask(id,
+                {
+                    tags:value
+                })).then(()=>dispatch(getTasks()));
+        }
+    }
+
+    const updateSubTaskStatus=(checkboxValue)=>
+    {
+        let newData=subTasks.map((item)=>{
+            if(checkboxValue.includes(item.subTaskTitle))
+            {
+                return{
+                    ...item,status:true
+                }
+            }
+            return {...item,status:false}
+        })
+        dispatch(addSubtasks(id,{subTasks:newData})).then(()=>dispatch(getTasks()));
+    }
     useEffect(()=>
     {
         if(tasks.length===0){
@@ -57,17 +103,18 @@ const Editpage = () => {
                 <Box>
                     <Stack direction={"column"}>
                         <Input value={taskTitle} placeholder="Title"  onChange={(e)=>settaskTitle(e.target.value)}/>
-                        <Editable value="Description">
+                        <Editable value={taskDescription}>
                             <EditablePreview/>
                             <EditableTextarea value={taskDescription} onChange={(e)=>settaskDescription(e.target.value)}/>
                         </Editable>
-                        <Button onClick={()=>{}}>Update</Button>
+                        <Button onClick={()=>{updateHandler("textAndDescription")}}>Update</Button>
                     </Stack>
                 </Box>
                 <Box>
                 <RadioGroup onChange={(value)=>
                 {
                     settaskStatus(value)
+                    updateHandler("taskStatus",value)
                 }} value={taskStatus}>
                     <Stack direction='column'>
                         <Radio value='todo'>Todo</Radio>
@@ -78,7 +125,7 @@ const Editpage = () => {
                 </Box>
                 <Box>
                     <Text>Tags</Text>
-                    <CheckboxGroup variantColor="green" onChange={(value)=>settaskTags(value)} value={taskTags}>
+                    <CheckboxGroup variantColor="green" onChange={(value)=>{settaskTags(value) ;updateHandler("tags",value)}} value={taskTags}>
                         <Stack spacing={[1,5]} direction="column">
                             <Checkbox value="Official">Official</Checkbox>
                             <Checkbox value="Personal">Personal</Checkbox>
@@ -95,7 +142,7 @@ const Editpage = () => {
                     </Flex>
                 </form>
                 <Flex direction={"column"} p={"1rem"} gap={"1rem"}>
-                <CheckboxGroup value={checkbox} onChange={(value)=>setcheckbox(value)}>
+                <CheckboxGroup value={checkbox} onChange={(value)=>{setcheckbox(value);updateSubTaskStatus(value)}}>
                     {
                     subTasks.length&&subTasks.map((item,ind)=>(
                         <Flex key={ind} justifyContent={"space-between"} >
